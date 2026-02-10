@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les comptes élève
+{% endblock %}
+
+{% block body %}
+
+	<section class="py-5">
+		<div class="container">
+
+
+			<h1 class="hero-heading mb-5 mt-3 mt-md-0">Suspendre un compte élève</h1>
+
+			<div class="table-responsive">
+				<table class="table table-striped table-hover">
+					<thead>
+						<tr>
+							<th>Id</th>
+							<th>Nom</th>
+							<th>Prénom</th>
+							<th>Email</th>
+							<th>Création du compte</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for student in students %}
+							<tr>
+								<td>{{ student.id }}</td>
+								<td>{{ student.lastName }}</td>
+								<td>{{ student.firstName }}</td>
+
+								<td>{{ student.email }}</td>
+								<td>{{ student.createdAt ? student.createdAt|date('Y-m-d') : '' }}</td>
+								<td>
+									<button type="button" class="btn btn-secondary px-4 me-md-2" data-bs-toggle="modal" data-bs-target="#confirmDeleteStudentModal" data-action="{{ path('app_student_delete', {'id': student.id}) }}" data-token="{{ csrf_token('delete_student' ~ student.id) }}" data-title="Confirmer la suppression de ce compte" data-body="Voulez-vous vraiment supprimer le compte de {{ student.lastName }} {{ student.firstName }} ?">
+										Supprimer
+									</button>
+
+								</td>
+							</tr>
+						{% else %}
+							<tr>
+								<td colspan="9">Pas de compte élève.</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+
+			<div class="text-center m-5">
+				<a class="btn btn-secondary px-4 me-md-2" href="{{ path('app_admin')}}">Retour</a>
+
+			</div>
+
+
+		</div>
+	</section>
+
+	{# Modal suppression d'un compte élève #}
+	<div class="modal fade" id="confirmDeleteStudentModal" aria-hidden="true">
+		<div class="modal-dialog">
+			<form method="post" class="modal-content" id="confirmDeleteStudentForm">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="confirmDeleteStudentLabel">Confirmer la suppression</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+				</div>
+
+				<div class="modal-body" id="confirmDeleteStudentBody">
+					Voulez-vous vraiment supprimer ce compte ?
+				</div>
+
+				<div class="modal-footer">
+					<input type="hidden" name="_token" id="deleteStudentToken">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non, revenir</button>
+					<button type="submit" class="btn btn-danger">Oui, supprimer</button>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="/js/modal.js" defer></script>
+
+{% endblock %}
