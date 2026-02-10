@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 	<head>
 		<meta charset="UTF-8">
+
 		<meta
 		name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,27 +12,26 @@
 		{# Compute a safe page description: #}
 		{% set page_desc = block('meta_description')|striptags|trim %}
 		{% if page_desc is empty %}
-			{% set page_desc = 'Cours de yoga à Buis-les-Baronnies : Hatha, Vinyasa, Yin. Réservation en ligne, 
-			professeurs certifiés, ambiance bienveillante.' %}
+			{% set page_desc = 'Le chef Armand vous invite à découvrir ses plats.' %}
 		{% endif %}
 
 		<meta name="description" content="{{ page_desc|slice(0,155) }}">
 
+
 		<title>
-			{# Title is overridable by child templates; default is the site name #}
-			{% block title %}Namaste Yoga Studio
+			{% block title %}Quai Antique
 			{% endblock %}
 		</title>
 
 		{# Favicon (served from /public/favicon/) #}
 		<link
-		rel="icon" type="image/x-icon" href="{{ asset('favicon/favicon.ico') }}">
+		rel="icon" type="image/x-icon" href="#">
 
 		{# Google fonts #}
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link
-		href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+		href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@300;400;500;600;700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
 		{# Bootstrap #}
 		<link
@@ -48,52 +48,18 @@
 		{% endblock %}
 	</head>
 
-	<body {% if block('body_class') is defined %} class="{{ block('body_class') }}" {% else %} class="pt-5" {% endif %} data-turbo="false">
+	<body>
 
-		{% if block('hide_header') is not defined %}
-			{% include "partials/header.html.twig" %}
-		{% endif %}
-
-		{% for label, messages in app.flashes %}
-			{% set alertType = (label == 'error') ? 'danger' : label %}
-
-			<div class="container mt-5 mb-3">
-				<div class="alert alert-{{ alertType }} alert-dismissible fade show" role="alert">
-
-					{% for msg in messages %}
-						<div class="text-center">
-							{{ msg }}
-						</div>
-					{% endfor %}
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
-				</div>
-			</div>
-		{% endfor %}
+		{% include "partials/header.html.twig" %}
 
 		<main>
 			{% block body %}{% endblock %}
 		</main>
 
-		{% if block('hide_footer') is not defined %}
-			{% include "partials/footer.html.twig" %}
-		{% endif %}
+		{% include "partials/footer.html.twig" %}
 
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
-		{% if app.request.get('_route') == 'app_home' %}
-			<script>
-				document.addEventListener('DOMContentLoaded', function () {
-const navbar = document.querySelector('.navbar-scroll');
-window.addEventListener('scroll', function () {
-if (window.scrollY > 50) {
-navbar.classList.add('scrolled');
-} else {
-navbar.classList.remove('scrolled');
-}
-});
-});
-			</script>
-		{% endif %}
 	</body>
 
 </html>

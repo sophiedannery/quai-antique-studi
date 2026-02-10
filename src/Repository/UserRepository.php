@@ -9,6 +9,9 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 
+/**
+ * @extends ServiceEntityRepository<User>
+ */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     public function __construct(ManagerRegistry $registry)
@@ -16,9 +19,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
-    // =========================
-    // Mise à jour du mot de passe (rehash automatique)
-    // =========================
+    /**
+     * Used to upgrade (rehash) the user's password automatically over time.
+     */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof User) {
@@ -30,34 +33,28 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    // =========================
-    // Récupérer les utilisateurs par rôle
-    // =========================
-    public function findByRole(string $role): array
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.roles LIKE :role')
-            ->setParameter('role', '%"'.$role.'"%')
-            ->orderBy('u.id', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
+    //    /**
+    //     * @return User[] Returns an array of User objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('u')
+    //            ->andWhere('u.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('u.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-    // =========================
-    // Récupérer uniquement les élèves
-    // =========================
-    public function findStudentsOnly(): array
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('(u.roles LIKE :user OR u.roles = :empty)')
-            ->andWhere('u.roles NOT LIKE :teacher')
-            ->andWhere('u.roles NOT LIKE :admin')
-            ->setParameter('user', '%"ROLE_USER"%')
-            ->setParameter('empty', '[]')
-            ->setParameter('teacher', '%"ROLE_TEACHER"%')
-            ->setParameter('admin', '%"ROLE_ADMIN"%')
-            ->orderBy('u.id', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
+    //    public function findOneBySomeField($value): ?User
+    //    {
+    //        return $this->createQueryBuilder('u')
+    //            ->andWhere('u.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

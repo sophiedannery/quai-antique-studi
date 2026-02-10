@@ -1,65 +1,44 @@
 <header class="header">
+	<nav class="navbar navbar-expand-lg bg-dark-custom" data-bs-theme="dark">
 
-	<nav class="navbar navbar-expand-lg fixed-top {% if app.request.get('_route') == 'app_home' %}navbar-scroll
-																			{% else %} shadow{% endif %}">
 
-		<div class="container">
+		<div class="container-fluid">
 
-			<div class="d-flex align-items-center">
-				<a class="navbar-brand py-1" href="/">
-					<img src="{{ asset('/logos/logo-vertical-safran.png')}}" alt="Accueil — Namaste Yoga Studio" height="50" loading="lazy"></a>
-			</div>
+			<a class="navbar-brand" href="/">Quai Antique</a>
 
-			<button class="text-white navbar-toggler navbar-toggler-right collapsed p-3 fs-4" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-				<i class="fa fa-bars fa-lg"></i>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
 			</button>
 
-			<div class="navbar-collapse collapse" id="navbarCollapse">
-				<ul class="navbar-nav ms-auto">
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a class="nav-link" href="/">ACCUEIL</a>
+						<a class="nav-link active" aria-current="page" href="/">Accueil</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_session_planning')}}">LES COURS</a>
+						<a class="nav-link" href="#">Galerie</a>
+
+
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{ path('app_contact')}}">CONTACT</a>
+						<a class="nav-link" href="#">La carte</a>
 					</li>
 
-					{% if is_granted('ROLE_ADMIN') %}
+					<li class="nav-item">
+						<a class="nav-link" href="#">Les réservations</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Mon compte</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Connexion</a>
+					</li>
 
-						<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-xl-infinite-block">
-							<a class="btn btn-primary" href="{{ path('app_admin')}}">Admin</a>
-						</li>
-						<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-xl-infinite-block">
-							<a class="btn btn-primary" href="{{ path('app_logout')}}">Deconnexion</a>
-						</li>
-
-					{% elseif is_granted('ROLE_TEACHER') %}
-						<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-xl-infinite-block">
-							<a class="btn btn-primary" href="{{ path('app_profile_teacher')}} ">Espace Professeur</a>
-
-						</li>
-						<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-xl-infinite-block">
-							<a class="btn btn-primary" href="{{ path('app_logout')}}">Deconnexion</a>
-						</li>
-
-					{% elseif app.user  %}
-						<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-xl-infinite-block">
-							<a class="btn btn-primary" href="{{ path('app_profile')}}">Mon espace</a>
-						</li>
-						<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-xl-infinite-block">
-							<a class="btn btn-primary" href="{{ path('app_logout')}}">Deconnexion</a>
-						</li>
-					{% else %}
-						<li class="nav-item mt-3 mt-lg-0 ms-lg-3 d-xl-infinite-block">
-							<a class="btn btn-primary" href="{{ path('app_login')}}">CONNEXION</a>
-						</li>
-					{% endif %}
 
 				</ul>
-			</div>
 
+			</div>
 		</div>
 	</nav>
 </header>
