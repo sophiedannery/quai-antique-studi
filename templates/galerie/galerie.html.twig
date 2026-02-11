@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quai Antique
+{% endblock %}
+
+{% block body %}
+
+	<section id="bg-hero-accueil" class="bg-hero-accueil d-flex flex-column align-items-center justify-content-center">
+		<h1 id="hero-heading" class="text-white">Galerie</h1>
+	</section>
+
+	<section class="container">
+		<div class="text-center pt-4">
+			<a href="#" class="btn btn-primary">Ajouter une photo</a>
+		</div>
+
+		<div class="row row-cols-2 row-cols-lg-3">
+			<div class="col p-3">
+				<div class="image-card text-white">
+					<img src="{{ asset('/photos/galerie3.jpg') }}" class="rounded w-100">
+
+					<p class="titre-image">Titre</p>
+				</div>
+			</div>
+			<div class="col p-3">
+				<div class="image-card text-white">
+					<img src="{{ asset('/photos/produits.jpg') }}" class="rounded w-100">
+
+					<p class="titre-image">Titre</p>
+				</div>
+			</div>
+			<div class="col p-3">
+				<div class="image-card text-white">
+					<img src="{{ asset('/photos/galerie5.jpg') }}" class="rounded w-100">
+
+					<p class="titre-image">Titre</p>
+				</div>
+			</div>
+			<div class="col p-3">
+				<div class="image-card text-white">
+					<img src="{{ asset('/photos/friends.jpg') }}" class="rounded w-100">
+
+					<p class="titre-image">Titre</p>
+				</div>
+			</div>
+
+			<div class="col p-3">
+				<div class="image-card text-white">
+					<img src="{{ asset('/photos/table.jpg') }}" class="rounded w-100">
+
+					<p class="titre-image">Titre</p>
+				</div>
+			</div>
+			<div class="col p-3">
+				<div class="image-card text-white">
+					<img src="{{ asset('/photos/chef.jpg') }}" class="rounded w-100">
+
+					<p class="titre-image">Titre</p>
+				</div>
+			</div>
+
+
+		</div>
+
+		<div class="text-center p-4">
+			<a href="#" class="btn btn-primary">Réserver</a>
+		</div>
+
+	</section>
+
+{% endblock %}
