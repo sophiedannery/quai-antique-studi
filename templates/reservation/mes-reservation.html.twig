@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Quai Antique
+{% endblock %}
+
+{% block body %}
+
+	<section id="bg-hero-accueil" class="bg-hero-accueil d-flex flex-column align-items-center justify-content-center">
+		<h1 id="hero-heading" class="text-white">Mes réservations</h1>
+	</section>
+
+	<section class="container">
+
+		<div class="text-center p-4">
+			<a href="{{ path('app_reserver')}}" class="btn btn-primary">Réserver</a>
+		</div>
+
+
+		<div
+			class="row pt-4 g-4">
+			{# g-4 = espace entre les colonnes #}
+
+			<div class="col-12 col-md-6 col-lg-4">
+				<div class="card h-100">
+					<div class="card-body">
+						<h5 class="card-title">Date</h5>
+						<h6 class="card-subtitle mb-2 text-body-secondary">Heure</h6>
+						<p class="card-text">5 personnes</p>
+						<p class="card-text">Pas d'allergies</p>
+						<a href="#" class="card-link">Modifier ma réservation</a>
+						<a href="#" class="card-link">Annuler ma réservation</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-6 col-lg-4">
+				<div class="card h-100">
+					<div class="card-body">
+						<h5 class="card-title">Date</h5>
+						<h6 class="card-subtitle mb-2 text-body-secondary">Heure</h6>
+						<p class="card-text">5 personnes</p>
+						<p class="card-text">Pas d'allergies</p>
+						<a href="#" class="card-link">Modifier ma réservation</a>
+						<a href="#" class="card-link">Annuler ma réservation</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-6 col-lg-4">
+				<div class="card h-100">
+					<div class="card-body">
+						<h5 class="card-title">Date</h5>
+						<h6 class="card-subtitle mb-2 text-body-secondary">Heure</h6>
+						<p class="card-text">5 personnes</p>
+						<p class="card-text">Pas d'allergies</p>
+						<a href="#" class="card-link">Modifier</a>
+						<a href="#" class="card-link">Annuler</a>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="text-center p-4">
+			<a href="{{ path('app_home')}}" class="btn btn-primary">Retour</a>
+		</div>
+
+	</section>
+
+
+{% endblock %}

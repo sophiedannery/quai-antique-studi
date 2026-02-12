@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ma réservation
+{% endblock %}
+
+{% block body %}
+	<section id="bg-hero-accueil" class="bg-hero-accueil d-flex flex-column align-items-center justify-content-center">
+		<h1 id="hero-heading" class="text-white">Ma réservation</h1>
+	</section>
+
+	<form method="post">
+
+		<section class="container p-4">
+
+			<div class="pb-4">
+				<label for="NomInput">Nom</label>
+				<input type="text" class="form-control" id="NomInput" placeholder"votre nom" value="{{ app.user.lastName}}" disabled>
+			</div>
+
+			<div class="pb-4">
+				<label for="PrenomInput">Prénom</label>
+				<input type="text" class="form-control" id="PrenomInput" placeholder"votre prénom" value="{{ app.user.firstName}}" disabled>
+			</div>
+
+			<div class="pb-4">
+				<label for="AllergieInput">Allergies</label>
+				<input type="text" class="form-control" id="AllergieInput" placeholder"vos allerfgies (fruits de mer, arachides...)" value="{{ app.user.allergy ?? 'Aucune allergie renseignée' }}">
+			</div>
+
+			<div class="pb-4">
+				<label for="NbConvivesInput">Nombre de convives habituel</label>
+				<input type="number" class="form-control" id="NbConvivesInput" placeholder"combien êtes-vous habituellement ?" value="{{ app.user.guestNumber }}">
+			</div>
+
+			<div class="pb-4">
+				<label for="DateInput">Date</label>
+				<input type="date" class="form-control" id="DateInput">
+			</div>
+
+			<div class="pb-4">
+
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="service" id="midiRadio">
+					<label class="form-check-label" for="midiRadio">
+						Midi
+					</label>
+				</div>
+
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="service" id="soirRadio" checked>
+					<label class="form-check-label" for="soirRadio">
+						Soir
+					</label>
+				</div>
+
+			</div>
+
+
+			<div class="pb-4">
+				<label class="form-label" for="selectHour">Heure</label>
+				<select class="form-select" id="selectHour">
+					<option>19:30</option>
+					<option>19:45</option>
+					<option>20:00</option>
+					<option>20:15</option>
+					<option>20:30</option>
+					<option>20:45</option>
+					<option>21:00</option>
+				</select>
+			</div>
+
+			<div class="text-center">
+				<button class="btn btn-lg btn-primary" type="submit">
+					Réserver
+				</button>
+				<button class="btn btn-lg btn-danger" type="button">
+					Annuler
+				</button>
+			</div>
+		</form>
+
+
+	</section>
+
+
+{% endblock %}
