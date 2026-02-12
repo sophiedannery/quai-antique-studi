@@ -1,19 +1,120 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register
+{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+	<section id="bg-hero-accueil" class="bg-hero-accueil d-flex flex-column align-items-center justify-content-center">
+		<h1 id="hero-heading" class="text-white">Inscription</h1>
+	</section>
 
-    {{ form_errors(registrationForm) }}
+	<section class="container p-4">
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+		{{ form_start(registrationForm, { attr: { class: 'form-validate' } }) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+
+		{{ form_errors(registrationForm) }}
+
+		<div class="mb-4">
+			<label class="form-label" for="email">
+				<i class="fa fa-envelope me-1"></i>
+				Adresse email
+			</label>
+			{{ form_widget(registrationForm.email, { attr: {'data-js': 'reg-email', class: 'form-control' } }) }}
+			{% if registrationForm.email.vars.errors|length > 0 %}
+				<div class="alert alert-danger mt-2 p-2">
+					{{ form_errors(registrationForm.email) }}
+				</div>
+			{% endif %}
+			<div class="invalid-feedback">Le mail n'est pas au bon format.
+			</div>
+
+		</div>
+
+		<div class="mb-4">
+			<label class="form-label" for="{{ registrationForm.firstName.vars.id }}">
+				<i class="fa fa-user me-1"></i>
+				Prénom
+			</label>
+			{{ form_widget(registrationForm.firstName, { attr: {'data-js': 'reg-firstName', class: 'form-control' } }) }}
+
+			{% if registrationForm.firstName.vars.errors|length > 0 %}
+				<div class="alert alert-danger mt-2 p-2">
+					{{ form_errors(registrationForm.firstName) }}
+				</div>
+			{% endif %}
+			<div class="invalid-feedback">Veuillez renseigner votre prénom.
+			</div>
+
+		</div>
+
+		<div class="mb-4">
+			<label class="form-label" for="{{ registrationForm.lastName.vars.id }}">
+				<i class="fa fa-user me-1"></i>
+				Nom
+			</label>
+			{{ form_widget(registrationForm.lastName, { attr: {'data-js': 'reg-lastName', class: 'form-control' } }) }}
+
+			{% if registrationForm.lastName.vars.errors|length > 0 %}
+				<div class="alert alert-danger mt-2 p-2">
+					{{ form_errors(registrationForm.lastName) }}
+				</div>
+			{% endif %}
+			<div class="invalid-feedback">Veuillez renseigner votre nom de famille.
+			</div>
+
+		</div>
+
+
+		<div class="mb-4">
+			<label class="form-label">
+				<i class="fa fa-lock me-1"></i>
+				Mot de passe
+			</label>
+			{{ form_widget(registrationForm.plainPassword.first, { attr: {'data-js': 'reg-password', class: 'form-control' } }) }}
+
+			{% if registrationForm.plainPassword.first.vars.errors|length > 0 %}
+				<div class="alert alert-danger mt-2 p-2">
+					{{ form_errors(registrationForm.plainPassword.first) }}
+				</div>
+			{% endif %}
+			<div class="invalid-feedback">Le mot de passe doit contenir au moins 9 caractères dont 1 majuscule, 1 minuscule et un chiffre.
+			</div>
+			<div class="valid-feedback">Le mot de passe est assez robuste.
+			</div>
+
+		</div>
+
+		<div class="mb-4">
+			<label class="form-label">
+				<i class="fa fa-lock me-1"></i>
+				Confirmer le mot de passe
+			</label>
+			{{ form_widget(registrationForm.plainPassword.second, { attr: {'data-js': 'reg-confirmPassword', class: 'form-control' } }) }}
+
+			{{ form_errors(registrationForm.plainPassword.second) }}
+			<div class="invalid-feedback">Les mots de passe ne correspondent pas.
+			</div>
+
+		</div>
+
+
+		<div class="d-grid gap-2">
+			<button id="btn-validation-register" class="btn btn-lg btn-primary" type="submit">
+				S’inscrire
+			</button>
+		</div>
+
+
+		{{ form_end(registrationForm) }}
+
+
+		<div class="text-center pt-4">
+			<a href="{{ path('app_login')}}">Vous avez déjà un compte ?
+				<br>Connectez-vous-vous ici !</a>
+		</div>
+
+	</section>
+
+
 {% endblock %}

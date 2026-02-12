@@ -22,4 +22,9 @@ security:
         # where to redirect after logout
         # target: app_any_route
 
-  access_control: []
+  access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/client, roles: ROLE_USER }
+
+  role_hierarchy: 
+        ROLE_ADMIN: [ROLE_USER]

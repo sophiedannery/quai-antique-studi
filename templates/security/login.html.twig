@@ -1,28 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}Log in!
+{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-        </div>
-    {% endif %}
+	<section id="bg-hero-accueil" class="bg-hero-accueil d-flex flex-column align-items-center justify-content-center">
+		<h1 id="hero-heading" class="text-white">Connexion</h1>
+	</section>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+	<form method="post">
+		{% if error %}
+			<div class="container mt-4">
+				<div class="alert alert-danger">
+					{{ error.messageKey|trans(error.messageData, 'security') }}
+				</div>
+			</div>
+		{% endif %}
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+		<section class="container p-4">
+
+			<div class="pb-4">
+				<label for="inputEmail">Adresse e-mail</label>
+				<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+			</div>
+
+			<div class="pb-4">
+				<label for="inputPassword">Mot de passe</label>
+				<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+			</div>
+
+			<input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+			<div class="text-center">
+				<button class="btn btn-lg btn-primary" type="submit">
+					Connexion
+				</button>
+			</div>
+		</form>
+
+		<div class="text-center pt-4">
+			<a href="{{ path('app_register')}}">Vous n'avez pas encore de compte ?
+				<br>Inscrivez-vous ici !</a>
+		</div>
+	</section>
+
+
 {% endblock %}
