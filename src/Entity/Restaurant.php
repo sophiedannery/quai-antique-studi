@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: RestaurantRepository::class)]
@@ -15,30 +16,39 @@ class Restaurant
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['restaurant:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: 'uuid')]
+    #[Groups(['restaurant:read'])]
     private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['restaurant:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['restaurant:read'])]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::ARRAY)]
+    #[Groups(['restaurant:read'])]
     private array $amOpeningTime = [];
 
     #[ORM\Column(type: Types::ARRAY)]
+    #[Groups(['restaurant:read'])]
     private array $pmOpeningTime = [];
 
     #[ORM\Column]
+    #[Groups(['restaurant:read'])]
     private ?int $maxGuest = null;
 
     #[ORM\Column]
+    #[Groups(['restaurant:read'])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['restaurant:read'])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     /**
@@ -65,6 +75,7 @@ class Restaurant
 
     public function __construct()
     {
+        $this->uuid = Uuid::v4();
         $this->pictures = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->menus = new ArrayCollection();
