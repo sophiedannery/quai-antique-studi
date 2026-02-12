@@ -4,7 +4,55 @@
 {% endblock %}
 
 {% block body %}
-	<div>
-		<p>Hello client</p>
-	</div>
+	<section id="bg-hero-accueil" class="bg-hero-accueil d-flex flex-column align-items-center justify-content-center">
+		<h1 id="hero-heading" class="text-white">Mon compte</h1>
+	</section>
+
+	<form method="post">
+
+		<section class="container p-4">
+
+			<div class="pb-4">
+				<label for="NomInput">Nom</label>
+				<input type="text" class="form-control" id="NomInput" placeholder"votre nom" value="{{ app.user.lastName}}">
+
+			</div>
+			<div class="pb-4">
+				<label for="PrenomInput">Prénom</label>
+				<input type="text" class="form-control" id="PrenomInput" placeholder"votre prénom" value="{{ app.user.firstName}}">
+
+
+			</div>
+			<div class="pb-4">
+				<label for="AllergieInput">Allergies</label>
+				<input type="text" class="form-control" id="AllergieInput" placeholder"vos allerfgies (fruits de mer, arachides...)" value="{{ app.user.allergy ?? 'Aucune allergie renseignée' }}">
+
+
+			</div>
+			<div class="pb-4">
+				<label for="NbConvivesInput">Nombre de convives habituel</label>
+				<input type="number" class="form-control" id="NbConvivesInput" placeholder"combien êtes-vous habituellement ?" value="{{ app.user.guestNumber }}">
+
+
+			</div>
+
+			<div class="text-center">
+				<button class="btn btn-lg btn-primary" type="submit">
+					Modifier mes informations
+				</button>
+				<button class="btn btn-lg btn-danger" type="button">
+					Supprimer mon compte
+				</button>
+
+			</div>
+		</form>
+
+		<div class="text-center pt-4">
+			<a href="{{ path('app_edit_password') }}">Cliquez ici pour modifier votre mot de passe</a>
+		</div>
+
+
+	</section>
+
+
 {% endblock %}
