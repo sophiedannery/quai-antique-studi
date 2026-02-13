@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
@@ -69,8 +70,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Restaurant::class, mappedBy: 'owner')]
     private Collection $restaurants;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $apiToken = null;
+
     public function __construct()
     {
+        $this->uuid = Uuid::v4()->toRfc4122();
+        $this->apiToken = bin2hex(random_bytes(20));
         $this->bookings = new ArrayCollection();
         $this->restaurants = new ArrayCollection();
     }
@@ -285,6 +291,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $restaurant->setOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getApiToken(): ?string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(?string $apiToken): static
+    {
+        $this->apiToken = $apiToken;
 
         return $this;
     }
