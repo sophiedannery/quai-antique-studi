@@ -10,10 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Uid\Uuid;
+use OpenApi\Attributes as OA;
 
 
 #[Route('/api/restaurant', name: 'app_api_restaurant_')]
@@ -28,6 +27,50 @@ final class RestaurantApiController extends AbstractController
     }
 
     #[Route(methods: ['POST'])]
+    #[OA\Post(
+        path: '/api/restaurant',
+        summary: "Créer un restaurant",
+        requestBody: new OA\RequestBody(
+            required: true,
+            description: "Données du restaurant à créer",
+            content: new OA\JsonContent(
+                type: 'object',
+                required: ['name', 'maxGuest', 'amOpeningTime', 'pmOpeningTime'],
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Nom du restaurant'),
+                    new OA\Property(property: 'description', type: 'string', nullable: true, example: 'Description du restaurant'),
+                    new OA\Property(property: 'maxGuest', type: 'integer', example: 80),
+                    new OA\Property(
+                        property: 'amOpeningTime',
+                        type: 'array',
+                        items: new OA\Items(type: 'string', example: '11:30'),
+                        example: ['11:30', '12:00', '12:30']
+                    ),
+                    new OA\Property(
+                        property: 'pmOpeningTime',
+                        type: 'array',
+                        items: new OA\Items(type: 'string', example: '19:00'),
+                        example: ['19:00', '19:30', '20:00']
+                    ),
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 201,
+                description: "Restaurant créé avec succès",
+                content: new OA\JsonContent(
+                    type: 'object',
+                    properties: [
+                        new OA\Property(property: 'id', type: 'integer', example: 1),
+                        new OA\Property(property: 'uuid', type: 'string', example: 'b3b1b6c0-0f0a-4f6a-9e57-2a2ccf2b6a2a'),
+                        new OA\Property(property: 'message', type: 'string', example: 'Restaurant créé'),
+                    ]
+                )
+            ),
+            new OA\Response(response: 401, description: "Non authentifié"),
+        ]
+    )]
     public function new(
         Request $request
     ): Response
@@ -59,6 +102,51 @@ final class RestaurantApiController extends AbstractController
 
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
+    #[OA\Get(
+        path: '/api/restaurant/{id}',
+        summary: 'Afficher un restaurant par son ID',
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                description: 'Identifiant du restaurant',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer', example: 1)
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 200,
+                description: 'Restaurant trouvé avec succès',
+                content: new OA\JsonContent(
+                    type: 'object',
+                    properties: [
+                        new OA\Property(property: 'id', type: 'integer', example: 1),
+                        new OA\Property(property: 'uuid', type: 'string', format: 'uuid', example: 'b3b1b6c0-0f0a-4f6a-9e57-2a2ccf2b6a2a'),
+                        new OA\Property(property: 'name', type: 'string', example: 'Le Quai Antique'),
+                        new OA\Property(property: 'description', type: 'string', example: 'Restaurant savoyard'),
+                        new OA\Property(
+                            property: 'amOpeningTime',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', example: '11:30')
+                        ),
+                        new OA\Property(
+                            property: 'pmOpeningTime',
+                            type: 'array',
+                            items: new OA\Items(type: 'string', example: '19:00')
+                        ),
+                        new OA\Property(property: 'maxGuest', type: 'integer', example: 80),
+                        new OA\Property(property: 'createdAt', type: 'string', format: 'date-time', example: '2026-02-13T12:34:56+01:00'),
+                        new OA\Property(property: 'updatedAt', type: 'string', format: 'date-time', nullable: true),
+                    ]
+                )
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Restaurant non trouvé'
+            )
+        ]
+    )]
     public function show(int $id): Response
     {
         $restaurant = $this->repo->findOneBy(['id' => $id]);
@@ -81,6 +169,55 @@ final class RestaurantApiController extends AbstractController
 
 
     #[Route('/{id}', name: 'edit', methods: ['PUT'])]
+    #[OA\Put(
+        path: '/api/restaurant/{id}',
+        summary: 'Modifier un restaurant',
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                in: 'path',
+                required: true,
+                description: 'Identifiant du restaurant à modifier',
+                schema: new OA\Schema(type: 'integer', example: 1)
+            )
+        ],
+        requestBody: new OA\RequestBody(
+            required: true,
+            description: 'Données du restaurant à mettre à jour',
+            content: new OA\JsonContent(
+                type: 'object',
+                properties: [
+                    new OA\Property(property: 'name', type: 'string', example: 'Nouveau nom'),
+                    new OA\Property(property: 'description', type: 'string', example: 'Nouvelle description'),
+                    new OA\Property(property: 'maxGuest', type: 'integer', example: 100),
+                    new OA\Property(
+                        property: 'amOpeningTime',
+                        type: 'array',
+                        items: new OA\Items(type: 'string', example: '11:30')
+                    ),
+                    new OA\Property(
+                        property: 'pmOpeningTime',
+                        type: 'array',
+                        items: new OA\Items(type: 'string', example: '19:00')
+                    ),
+                ]
+            )
+        ),
+        responses: [
+            new OA\Response(
+                response: 204,
+                description: 'Restaurant modifié avec succès'
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Restaurant non trouvé'
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Non authentifié'
+            )
+        ]
+    )]
     public function edit(int $id, Request $request): Response
     {
         $restaurant = $this->repo->findOneBy(['id' => $id]);
@@ -104,6 +241,33 @@ final class RestaurantApiController extends AbstractController
 
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    #[OA\Delete(
+        path: '/api/restaurant/{id}',
+        summary: 'Supprimer un restaurant par son ID',
+        parameters: [
+            new OA\Parameter(
+                name: 'id',
+                description: 'Identifiant du restaurant à supprimer',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer', example: 1)
+            )
+        ],
+        responses: [
+            new OA\Response(
+                response: 204,
+                description: 'Restaurant supprimé (aucun contenu retourné)'
+            ),
+            new OA\Response(
+                response: 404,
+                description: 'Restaurant non trouvé'
+            ),
+            new OA\Response(
+                response: 401,
+                description: 'Non authentifié'
+            )
+        ]
+    )]
     public function delete(int $id): Response
     {
         $restaurant = $this->repo->findOneBy(['id' => $id]);

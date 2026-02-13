@@ -1,0 +1,19 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Quai Antique API
+            description: Documentation de l'API Quai Antique
+            version: 1.0.0
+        components: 
+            securitySchemes:
+                auth-token:
+                    type: apiKey
+                    name: auth-token
+                    in: header
+        security:
+            - auth-token: []
+
+
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
