@@ -47,4 +47,24 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    // =========================
+    // Inscription API
+    // =========================
+    #[Route('/security/registration', name: 'app_registration')]
+    public function register(): Response
+    {
+        return $this->render('security/registration.html.twig', [
+        ]);
+    }
+
+    // =========================
+    // Connexion API
+    // =========================
+    #[Route('/security/loginapi', name: 'app_loginapi')]
+    public function loginapi(): Response
+    {
+        return $this->render('security/loginapi.html.twig', [
+        ]);
+    }
 }

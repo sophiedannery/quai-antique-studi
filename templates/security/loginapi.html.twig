@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion
+{% endblock %}
+
+{% block body %}
+
+	<section id="bg-hero-accueil" class="bg-hero-accueil d-flex flex-column align-items-center justify-content-center">
+		<h1 id="hero-heading" class="text-white">Connexion API</h1>
+	</section>
+
+
+	<section class="container p-4">
+
+		<form method="post">
+
+			<div class="pb-4">
+				<label for="EmailInput" class="form-label">Adresse e-mail</label>
+				<input type="email" name="Email" id="EmailInput" class="form-control" required>
+			</div>
+
+			<div class="pb-4">
+				<label for="PasswordInput">Mot de passe</label>
+				<input type="password" name="Password" id="PasswordInput" class="form-control" required>
+			</div>
+
+			<div class="text-center">
+				<button class="btn btn-lg btn-primary" type="submit">
+					Connexion
+				</button>
+			</div>
+		</form>
+
+		<div class="text-center pt-4">
+			<a href="{{ path('app_registration')}}">Vous n'avez pas encore de compte ?
+				<br>Inscrivez-vous ici !</a>
+		</div>
+	</section>
+
+
+{% endblock %}
