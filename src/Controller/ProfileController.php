@@ -19,7 +19,7 @@ final class ProfileController extends AbstractController
     #[Route('/edit-password', name: 'app_edit_password')]
     public function editPassworf(): Response
     {
-        return $this->render('profile/edit-password.html.twig', [
+        return $this->render('profile/edit.html.twig', [
             'controller_name' => 'ProfileController',
         ]);
     }

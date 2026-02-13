@@ -4,8 +4,10 @@ const mailInput = document.getElementById("EmailInput");
 const passwordInput = document.getElementById("PasswordInput");
 const btnSignin = document.getElementById("btnSignin");
 const signinForm = document.getElementById("signinForm");
+const tokenCookieName = "accesstoken";
 
 btnSignin.addEventListener("click", checkCredentials);
+
 
 function checkCredentials() {
     const dataForm = new FormData(signinForm);
