@@ -17,7 +17,7 @@
 			</div>
 		{% endif %}
 
-		<form method="post" id="restaurant-form">
+		<form method="post" id="restaurantForm">
 
 			<div class="pb-4">
 				<label for="name">Nom du restaurant</label>
@@ -44,19 +44,20 @@
 				<input type="text" name="pmOpeningTime" id="pmOpeningTime" class="form-control" placeholder="19:00,19:30,20:00" required>
 			</div>
 
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('create_restaurant') }}">
+			{# <input type="hidden" name="_csrf_token" value="{{ csrf_token('create_restaurant') }}"> #}
 
 			<div class="text-center">
-				<button class="btn btn-lg btn-primary" id="btn-creation-restaurant" type="submit">
+				<button class="btn btn-lg btn-primary" id="btn-creation-restaurant" type="button">
 					Créer le restaurant
 				</button>
 			</div>
 
 		</form>
 
-		<div id="restaurant-result" class="mt-3"></div>
-
 
 	</section>
+
+	<script src="/js/restaurant-new.js" defer></script>
+
 
 {% endblock %}

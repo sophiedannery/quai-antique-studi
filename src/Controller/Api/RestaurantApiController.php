@@ -23,11 +23,9 @@ final class RestaurantApiController extends AbstractController
         private EntityManagerInterface $manager,
         private RestaurantRepository $repo,
         private SerializerInterface $serializer,
-        private UrlGeneratorInterface $urlGenerator
         )
     {
     }
-
 
     #[Route(methods: ['POST'])]
     public function new(
@@ -38,7 +36,6 @@ final class RestaurantApiController extends AbstractController
         if (!$user) {
             return $this->json(['error' => 'Non authentifié'], Response::HTTP_UNAUTHORIZED);
         }
-
         $restaurant = $this->serializer->deserialize(
             $request->getContent(),
             Restaurant::class,
@@ -65,15 +62,12 @@ final class RestaurantApiController extends AbstractController
     public function show(int $id): Response
     {
         $restaurant = $this->repo->findOneBy(['id' => $id]);
-
         if ($restaurant) {
-
             $responseData = $this->serializer->serialize(
                 $restaurant,
                 'json',
                 ['groups' => 'restaurant:read']
                 );
-
             return new JsonResponse(
                 $responseData,
                 Response::HTTP_OK,
@@ -81,7 +75,6 @@ final class RestaurantApiController extends AbstractController
                 true
             );
         }
-
         return new JsonResponse(null, Response::HTTP_NOT_FOUND);
     }
 
@@ -91,7 +84,6 @@ final class RestaurantApiController extends AbstractController
     public function edit(int $id, Request $request): Response
     {
         $restaurant = $this->repo->findOneBy(['id' => $id]);
-
         if ($restaurant) {
         $restaurant = $this->serializer->deserialize(
                 $request->getContent(),
@@ -103,9 +95,7 @@ final class RestaurantApiController extends AbstractController
 
             $this->manager->flush();
             return new JsonResponse(null, Response::HTTP_NO_CONTENT);
-            
         }
-
         return new JsonResponse(null, Response::HTTP_NOT_FOUND);
     }
 
@@ -117,14 +107,11 @@ final class RestaurantApiController extends AbstractController
     public function delete(int $id): Response
     {
         $restaurant = $this->repo->findOneBy(['id' => $id]);
-
         if ($restaurant) {
             $this->manager->remove($restaurant);
             $this->manager->flush();
-
             return new JsonResponse(null, Response::HTTP_NO_CONTENT);
         }
-
         return new JsonResponse(null, Response::HTTP_NOT_FOUND);
     }
 
