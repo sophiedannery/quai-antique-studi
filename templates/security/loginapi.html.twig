@@ -12,20 +12,21 @@
 
 	<section class="container p-4">
 
-		<form method="post">
+		<form method="post" id="signinForm">
 
 			<div class="pb-4">
 				<label for="EmailInput" class="form-label">Adresse e-mail</label>
-				<input type="email" name="Email" id="EmailInput" class="form-control" required>
+				<input type="email" name="email" id="EmailInput" class="form-control" placeholder="exemple@mail.com" required>
+				<div class="invalid-feedback">Le mail et le mot de passe ne correspondent pas.</div>
 			</div>
 
 			<div class="pb-4">
 				<label for="PasswordInput">Mot de passe</label>
-				<input type="password" name="Password" id="PasswordInput" class="form-control" required>
+				<input type="password" name="mdp" id="PasswordInput" class="form-control" required>
 			</div>
 
 			<div class="text-center">
-				<button class="btn btn-lg btn-primary" type="submit">
+				<button class="btn btn-lg btn-primary" id="btnSignin" type="button">
 					Connexion
 				</button>
 			</div>
@@ -36,6 +37,8 @@
 				<br>Inscrivez-vous ici !</a>
 		</div>
 	</section>
+
+	<script src="/js/connection.js" defer></script>
 
 
 {% endblock %}

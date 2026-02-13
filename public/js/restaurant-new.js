@@ -36,7 +36,7 @@ function NewRestaurant() {
         if (response.ok) {
             return response.json();
         } else {
-            alert("Erreur lors de l'inscription");
+            alert("Erreur lors de l'ajout du restaurant");
         }
         
     })
