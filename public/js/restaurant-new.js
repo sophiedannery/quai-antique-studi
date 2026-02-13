@@ -32,7 +32,21 @@ function NewRestaurant() {
     };
 
     fetch("/api/restaurant", requestOptions)
-    .then(response => response.json())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            alert("Erreur lors de l'inscription");
+        }
+        
+    })
+    .then((result) => {
+        alert("Le restaurant a bien été ajouté");
+        document.location.href="/";
+
+    })
+    .catch((error) => {
+        console.error(error);
+        alert("Erreur : " + error.message);
+    });
 }
